@@ -1,9 +1,13 @@
 <template>
   <div id="app">
     <TodoHeader></TodoHeader>
-    <TodoInput></TodoInput>
-    <TodoList></TodoList>
-    <TodoFooter></TodoFooter>
+    <TodoInput v-on:addTodoItem="addOneItem"></TodoInput>
+    <TodoList
+      v-bind:propsdata="todoItems"
+      v-on:removeItem="removeOneItem"
+      v-on:toggleItem="toggleOneItem"
+    ></TodoList>
+    <TodoFooter v-on:clearAll="clearAllItems"></TodoFooter>
   </div>
 </template>
 
@@ -29,6 +33,27 @@ export default {
     return {
       todoItems: [],
     };
+  },
+  methods: {
+    addOneItem: function (todoItems) {
+      var obj = { completed: false, item: todoItems };
+      localStorage.setItem(todoItems, JSON.stringify(obj));
+      this.todoItems.push(obj);
+    },
+    removeOneItem: function (todoItem, index) {
+      localStorage.removeItem(todoItem);
+      this.todoItems.splice(index, 1);
+    },
+    toggleOneItem: function (todoItem, index) {
+      this.todoItems[index].completed = !this.todoItems[index].completed;
+      //로컬스토리지에 데이터 갱신
+      localStorage.removeItem(todoItem, index);
+      localStorage.setItem(todoItem.item, JSON.stringify(todoItem));
+    },
+    clearAllItems: function () {
+      localStorage.clear();
+      this.todoItems = [];
+    },
   },
   created: function () {
     if (localStorage.length > 0) {
