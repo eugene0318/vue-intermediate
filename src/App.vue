@@ -1,26 +1,69 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="app">
+    <TodoHeader></TodoHeader>
+    <TodoInput></TodoInput>
+    <TodoList></TodoList>
+    <TodoFooter></TodoFooter>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import TodoHeader from "./components/TodoHeader.vue"; // eslint-disable-line no-unused-vars
+import TodoInput from "./components/TodoInput.vue"; // eslint-disable-line no-unused-vars
+import TodoList from "./components/TodoList.vue"; // eslint-disable-line no-unused-vars
+import TodoFooter from "./components/TodoFooter.vue"; // eslint-disable-line no-unused-vars
+
+// var my_cmp = {
+//   template: "<div>my component</div>",
+// };
+
+// new Vue({
+//   el: "",
+//   components: {
+//     my_cmp: my_cmp,
+//   },
+// });
 
 export default {
-  name: 'App',
+  data: function () {
+    return {
+      todoItems: [],
+    };
+  },
+  created: function () {
+    if (localStorage.length > 0) {
+      for (var i = 0; i < localStorage.length; i++) {
+        if (localStorage.key(i) !== "loglevel:webpack-dev-server") {
+          this.todoItems.push(
+            JSON.parse(localStorage.getItem(localStorage.key(i)))
+          );
+          //this.todoItems.push(localStorage.key(i));
+        }
+      }
+    }
+  },
   components: {
-    HelloWorld
-  }
-}
+    TodoHeader: TodoHeader,
+    TodoInput: TodoInput,
+    TodoList: TodoList,
+    TodoFooter: TodoFooter,
+  },
+};
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+body {
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  background-color: #f6f6f6;
+}
+input {
+  border-style: groove;
+  width: 200px;
+}
+button {
+  border-style: groove;
+}
+.shadow {
+  box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.03);
 }
 </style>
