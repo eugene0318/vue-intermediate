@@ -1,39 +1,62 @@
-<template lang="">
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
-    integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog=="
-    crossorigin="anonymous"
-  />
-  <div class="inputBox">
-    <input type="text" v-model="newTodoItem" v-on:keyup.enter="addTodo" />
-
-    <span class="addContainer">
+<template>
+  <div class="inputBox shadow">
+    <input type="text" v-model="newTodoItem" v-on:keyup.enter="addTodoItem" />
+    <!-- <span class="addContainer" v-on:click="addTodo">
+      
       <i class="fas fa-plus addBtn" aria-hidden="true"></i>
-    </span>
+    </span> -->
+
+    <Modal v-if="showModal" @close="showModal = false">
+      <!--
+      you can use custom content here to overwrite
+      default content
+      -->
+      <template v-slot:header
+        ><h3>
+          경고
+          <i
+            class="closeModalBtn fas fa-times"
+            @click="showModal = false"
+          ></i></h3
+      ></template>
+      <template v-slot:body>
+        <div>무언가를 입력하세요</div>
+      </template>
+    </Modal>
   </div>
 </template>
+
 <script>
+import Modal from "./common/VueModal.vue";
+
 export default {
-  data: function () {
+  components: {
+    Modal,
+  },
+  data() {
     return {
-      newTodoItem: "",
+      newTodoItem: "", // v-model = 2-way binding.(template <-> script)
+      showModal: false,
     };
   },
   methods: {
-    addTodo: function () {
-      console.log(this.newTodoItem);
+    addTodoItem() {
       if (this.newTodoItem !== "") {
+        // this.$emit('이벤트명', 인자1, 인자2, ...);
         this.$emit("addTodoItem", this.newTodoItem);
+        //this.$store.commit("addTodoItem", this.newTodoItem);
         this.clearInput();
+      } else {
+        this.showModal = !this.showModal;
       }
     },
-    clearInput: function () {
+    clearInput() {
       this.newTodoItem = "";
     },
   },
 };
 </script>
+
 <style scoped>
 input:focus {
   outline: none;

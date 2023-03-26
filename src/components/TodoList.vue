@@ -6,7 +6,7 @@
     crossorigin="anonymous"
   />
   <div>
-    <ul>
+    <transition-group name="list" tag="ul">
       <li
         v-for="(todoItem, index) in propsdata"
         v-bind:key="todoItem"
@@ -24,18 +24,18 @@
           <i class="fas fa-trash-alt" title="Edit"></i>
         </span>
       </li>
-    </ul>
+    </transition-group>
   </div>
 </template>
 <script>
 export default {
   props: ["propsdata"],
   methods: {
-    removeTodo: function (todoItem, index) {
+    removeTodo(todoItem, index) {
       this.$emit("removeItem", todoItem, index);
       //console.log(todoItem, index);
     },
-    toggleComplete: function (todoItem, index) {
+    toggleComplete(todoItem, index) {
       this.$emit("toggleItem", todoItem, index);
     },
   },
