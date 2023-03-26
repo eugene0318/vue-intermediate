@@ -1,5 +1,5 @@
 <template lang="">
-  <div>TODO it!</div>
+  <div>{{ $store.state.headerText }}</div>
 </template>
 <script>
 export default {};
