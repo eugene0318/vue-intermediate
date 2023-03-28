@@ -8,7 +8,7 @@
   <div>
     <transition-group name="list" tag="ul">
       <li
-        v-for="(todoItem, index) in propsdata"
+        v-for="(todoItem, index) in this.$store.state.todoItems"
         v-bind:key="todoItem"
         class="shadow"
       >
@@ -29,7 +29,7 @@
 </template>
 <script>
 export default {
-  props: ["propsdata"],
+  //props: ["propsdata"],
   methods: {
     removeTodo(todoItem, index) {
       this.$emit("removeItem", todoItem, index);
