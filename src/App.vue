@@ -3,12 +3,9 @@
     <TodoHeader></TodoHeader>
     <!-- <TodoInput v-on:addTodoItem="addOneItem"></TodoInput> -->
     <TodoInput></TodoInput>
-    <TodoList
-      v-bind:propsdata="todoItems"
-      v-on:removeItem="removeOneItem"
-      v-on:toggleItem="toggleOneItem"
-    ></TodoList>
-    <TodoFooter v-on:clearAll="clearAllItems"></TodoFooter>
+    <TodoList v-bind:propsdata="todoItems"></TodoList>
+    <!-- <TodoFooter v-on:clearAll="clearAllItems"></TodoFooter> -->
+    <TodoFooter></TodoFooter>
   </div>
 </template>
 
@@ -30,31 +27,31 @@ import TodoFooter from "./components/TodoFooter.vue"; // eslint-disable-line no-
 // });
 
 export default {
-  data() {
-    return {
-      todoItems: [],
-    };
-  },
+  // data() {
+  //   return {
+  //     todoItems: [],
+  //   };
+  // },
   methods: {
     // addOneItem(todoItems) {
     //   const obj = { completed: false, item: todoItems };
     //   localStorage.setItem(todoItems, JSON.stringify(obj));
     //   this.todoItems.push(obj);
     // },
-    removeOneItem(todoItem, index) {
-      localStorage.removeItem(todoItem);
-      this.todoItems.splice(index, 1);
-    },
-    toggleOneItem(todoItem, index) {
-      this.todoItems[index].completed = !this.todoItems[index].completed;
-      //로컬스토리지에 데이터 갱신
-      localStorage.removeItem(todoItem, index);
-      localStorage.setItem(todoItem.item, JSON.stringify(todoItem));
-    },
-    clearAllItems() {
-      localStorage.clear();
-      this.todoItems = [];
-    },
+    // removeOneItem(todoItem, index) {
+    //   localStorage.removeItem(todoItem);
+    //   this.todoItems.splice(index, 1);
+    // },
+    // toggleOneItem(todoItem, index) {
+    //   this.todoItems[index].completed = !this.todoItems[index].completed;
+    //   //로컬스토리지에 데이터 갱신
+    //   localStorage.removeItem(todoItem, index);
+    //   localStorage.setItem(todoItem.item, JSON.stringify(todoItem));
+    // },
+    // clearAllItems() {
+    //   localStorage.clear();
+    //   this.todoItems = [];
+    // },
   },
   components: {
     TodoHeader,
